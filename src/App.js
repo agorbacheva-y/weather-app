@@ -1,7 +1,9 @@
+import Fetch from "./components/Fetch";
+
 function App() {
   return (
     <div>
-      Weather App
+      <Fetch />
     </div>
   );
 }
