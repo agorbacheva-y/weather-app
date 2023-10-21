@@ -8,9 +8,8 @@ function Fetch() {
   let city = "";
 
   useEffect(() => {
-    fetchWeather("Tokyo");
-    console.log(weather);
-  },[weather]);
+    fetchWeather("Stockholm");
+  },[]);
 
   // fetch API
   const fetchWeather = (city) => { 
@@ -45,12 +44,13 @@ function Fetch() {
     return `sunset: ${sunsetHour}:${sunsetMinutes}`;
   };
 
+  console.log(weather);
 
   return (
     <div>
-      <p>{weather.main.temp}&deg;C</p>
+      {/* <p>{weather.main.temp}&deg;C</p>
       <p>{weather.name}</p>
-      <p>{weather.weather[0].main}</p>
+      <p>{weather.weather[0].main}</p> */}
     </div>
   )
 }
