@@ -3,6 +3,8 @@ import axios from "axios";
 
 function Fetch() {
   const [ weather, setWeather ] = useState({});
+  const [ sunsetTimeShort, setSunsetTimeShort ] = useState("");
+  const [ sunriseTimeShort, setSunriseTimeShort ] = useState("");
 
   const APIKey = process.env.REACT_APP_APIKEY;
   let city = "";
@@ -33,33 +35,37 @@ function Fetch() {
   };
 
   // functions to get sunrise and sunset time
-  const getSunriseTime = (sunrise) => {
+  const getSunriseTime = () => {
     let sunriseTime = new Date((weather.sys.sunrise + weather.timezone) * 1000);
     let sunriseTimeLocale = 
       sunriseTime.setMinutes(sunriseTime.getMinutes() + sunriseTime.getTimezoneOffset());
-    let sunriseTimeShort = sunriseTime.toLocaleTimeString("sv-SE", {timeStyle: "short"});
-    //console.log(sunriseTimeShort);
+    setSunriseTimeShort(sunriseTime.toLocaleTimeString("sv-SE", {timeStyle: "short"}));
+    console.log(sunriseTimeShort);
   };
 
-  const getSunsetTime = (sunset) => {
+  const getSunsetTime = () => {
     let sunsetTime = new Date((weather.sys.sunset + weather.timezone) * 1000);
     let sunsetTimeLocale = 
     sunsetTime.setMinutes(sunsetTime.getMinutes() + sunsetTime.getTimezoneOffset());
-    let sunsetTimeShort = sunsetTime.toLocaleTimeString("sv-SE", {timeStyle: "short"});
-    //console.log(sunsetTimeShort);
+    setSunsetTimeShort(sunsetTime.toLocaleTimeString("sv-SE", {timeStyle: "short"}));
+    console.log(sunsetTimeShort);
   };
 
-  //console.log(weather);
+  console.log(weather);
 
   return (
-    <div>
-      <div>
+    <header>
+      {/* <div>
         <p>{weather.main.temp}&deg;C</p>
         <p>{weather.name}</p>
         <p>{weather.weather[0].main}</p>
       </div>
       
-    </div>
+      <div>
+        <span>sunrise</span>
+        <span>{sunsetTimeShort}</span>
+      </div> */}
+    </header>
   )
 }
 
