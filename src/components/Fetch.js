@@ -7,11 +7,19 @@ function Fetch() {
   const APIKey = process.env.REACT_APP_APIKEY;
   let city = "";
 
+  // fetch data
   useEffect(() => {
     fetchWeather("Stockholm");
   },[]);
 
-  // fetch API
+  // call function for sunrise and sunset times
+  useEffect(() => {
+    getSunriseTime();
+    getSunsetTime();
+  },[weather])
+
+
+  // function to fetch API
   const fetchWeather = (city) => { 
     const url = `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${APIKey}`;
     axios
@@ -22,37 +30,39 @@ function Fetch() {
       .catch(error => {
         console.log(error.response.status)
       });
-
-      // // save sunrise and sunset times
-      // let sunrise = new Date(data.sys.sunrise * 1000);
-      // let sunriseTime = getSunriseTime(sunrise);
-      // let sunset = new Date(data.sys.sunset * 1000);
-      // let sunsetTime = getSunsetTime(sunset);
-      // console.log(sunriseTime, sunsetTime);
   };
 
   // functions to get sunrise and sunset time
   const getSunriseTime = (sunrise) => {
-    let sunriseHour = sunrise.getHours().toLocaleString("sv-SE", { minimumIntegerDigits: 2 });
-    let sunriseMinutes = sunrise.getMinutes().toLocaleString("sv-SE", { minimumIntegerDigits: 2 });
-    return `sunrise: ${sunriseHour}:${sunriseMinutes}`;
+    let sunriseTime = new Date((weather.sys.sunrise + weather.timezone) * 1000);
+    let sunriseTimeLocale = 
+      sunriseTime.setMinutes(sunriseTime.getMinutes() + sunriseTime.getTimezoneOffset());
+    let sunriseTimeShort = sunriseTime.toLocaleTimeString("sv-SE", {timeStyle: "short"});
+    //console.log(sunriseTimeShort);
   };
 
   const getSunsetTime = (sunset) => {
-    let sunsetHour = sunset.getHours().toLocaleString("sv-SE", { minimumIntegerDigits: 2 });
-    let sunsetMinutes = sunset.getMinutes().toLocaleString("sv-SE", { minimumIntegerDigits: 2 });
-    return `sunset: ${sunsetHour}:${sunsetMinutes}`;
+    let sunsetTime = new Date((weather.sys.sunset + weather.timezone) * 1000);
+    let sunsetTimeLocale = 
+    sunsetTime.setMinutes(sunsetTime.getMinutes() + sunsetTime.getTimezoneOffset());
+    let sunsetTimeShort = sunsetTime.toLocaleTimeString("sv-SE", {timeStyle: "short"});
+    //console.log(sunsetTimeShort);
   };
 
-  console.log(weather);
+  //console.log(weather);
 
   return (
     <div>
-      {/* <p>{weather.main.temp}&deg;C</p>
-      <p>{weather.name}</p>
-      <p>{weather.weather[0].main}</p> */}
+      <div>
+        <p>{weather.main.temp}&deg;C</p>
+        <p>{weather.name}</p>
+        <p>{weather.weather[0].main}</p>
+      </div>
+      
     </div>
   )
 }
 
 export default Fetch
+
+// my key: fbb34d8403102e377ffd87aab22322ed
