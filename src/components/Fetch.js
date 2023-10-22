@@ -14,27 +14,34 @@ const Fetch = () => {
   },[]);
 
   // function to fetch API
-  const fetchWeather = (city) => { 
+  
+  // const fetchWeather = (city) => { 
+  //   const url = `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${APIKey}`;
+  //   axios
+  //     .get(url)
+  //     .then((response) => {
+  //       setWeather(response.data);
+  //       return response;
+  //     })
+  //     .catch(error => {
+  //       console.log(error.response.status)
+  //     });
+  // };
+  const fetchWeather = async (city) => {
     const url = `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${APIKey}`;
-    axios
-      .get(url)
-      .then((response) => {
-        setWeather(response.data);
-      })
-      .catch(error => {
-        console.log(error.response.status)
-      });
+    let response = await fetch(url);
+    const data = await response.json();
+    console.log(data);
+    setWeather(data);
   };
-
-  console.log(weather);
 
   return (
     <header>
-      <div>
+      {/* <div>
         <p>{weather.main.temp}&deg;C</p>
         <p>{weather.name}</p>
         <p>{weather.weather[0].main}</p>
-      </div>
+      </div> */}
 
       <Sunrise />
     </header>
